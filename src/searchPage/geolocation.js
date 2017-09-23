@@ -1,4 +1,7 @@
 import React from 'react';
+import Toggle from 'material-ui/Toggle';
+import Slider from 'material-ui/Slider';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class Geolocation extends React.Component {
 	constructor(props) {
@@ -15,7 +18,7 @@ class Geolocation extends React.Component {
 
 	updateLocation(event) {
 		// Toggle State
-		console.log(event.target.checked);
+		//console.log(event.target.checked);
 		if(event.target.checked) {
 			// Get Geolocation
 			navigator.geolocation.getCurrentPosition(
@@ -42,28 +45,55 @@ class Geolocation extends React.Component {
 		}
 	}
 
-	updateRange(event) {
-		this.setState({range: event.target.value});
-		this.props.updateRange(event.target.value);
+	updateRange(event, newValue) {
+		newValue = Math.round(newValue * 100);
+		this.setState({range: newValue});
+		this.props.updateRange(newValue);
 	}
 
 	render() {
+		const position = {
+			display: 'flex',
+			flexDirection: 'row',
+			height: '100%',
+			alignItems:'center',
+			justifyContent:'center'
+		}
+		const sliderStyle = {
+			marginLeft: 20,
+			marginTop: 0,
+			marginBottom: 0
+		};
+		const textStyle = {
+			width: 20,
+			marginLeft: 30,
+			lineHeight: 4,
+			fontFamily: 'Roboto, sans-serif'
+		}
+
 		return (
-			<div>
-				<label>
-					Location
-					<input type="checkbox" onClick={this.updateLocation.bind(this)} checked={this.state.enabled} />
-				</label>
-				<label>
-					Range
-					<input type="range"
-						value={this.state.location.range}
+			<div style={position}>
+				<div>
+					<Toggle
+						labelStyle={{color: this.props.muiTheme.palette.alternateTextColor}}
+			      label="Location"
+						onToggle={this.updateLocation.bind(this)}
+						defaultToggled={this.state.enabled}
+			    />
+				</div>
+				<div style={{width: '50%', display: 'flex', flexDirection: 'row', alignItems:'center', justifyContent:'center'}}>
+					<Slider
+						style={{width: 100}}
+						disabled={!this.state.enabled}
+						sliderStyle={sliderStyle}
+						defaultValue={this.state.range/100}
 						onChange={this.updateRange.bind(this)}
 					/>
-				</label>
+					<span style={textStyle}>{this.state.range}km</span>
+				</div>
 			</div>
 		);
 	}
 
 }
-export default Geolocation;
+export default muiThemeable()(Geolocation);
