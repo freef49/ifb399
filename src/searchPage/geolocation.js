@@ -76,10 +76,10 @@ class Geolocation extends React.Component {
 				<div>
 					<Toggle
 						labelStyle={{color: this.props.muiTheme.palette.alternateTextColor}}
-			      label="Location"
+						label="Location"
 						onToggle={this.updateLocation.bind(this)}
 						defaultToggled={this.state.enabled}
-			    />
+					/>
 				</div>
 				<div style={{width: '50%', display: 'flex', flexDirection: 'row', alignItems:'center', justifyContent:'center'}}>
 					<Slider
