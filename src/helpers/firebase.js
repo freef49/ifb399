@@ -5,6 +5,14 @@ export function loginWithGoogle() {
     //return authenticate(loginWithFirebase(googleProvider));
 }
 
+export function loginWithEmail(email, password) {
+	return firebaseAuth().signInWithEmailAndPassword(email, password);
+}
+
+export function sendPasswordResetEmail(email) {
+	return firebaseAuth().sendPasswordResetEmail(email);
+}
+
 
 function authenticate(promise) {
     return promise
