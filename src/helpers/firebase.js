@@ -13,6 +13,9 @@ export function sendPasswordResetEmail(email) {
 	return firebaseAuth().sendPasswordResetEmail(email);
 }
 
+export function signupEmail(email, password) {
+	return firebaseAuth().createUserWithEmailAndPassword(email, password);
+}
 
 function authenticate(promise) {
     return promise

@@ -2,7 +2,7 @@ import React from 'react';
 import {FontIcon, RaisedButton, FlatButton, TextField, Dialog} from "material-ui";
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
-import {loginWithGoogle, loginWithEmail, sendPasswordResetEmail} from "../helpers/firebase";
+import {loginWithGoogle, loginWithEmail, sendPasswordResetEmail, signupEmail} from "../helpers/firebase";
 import {firebaseAuth} from "../constraints/constants";
 
 const firebaseAuthKey = "firebaseAuthInProgress";
@@ -43,6 +43,18 @@ class LoginDialog extends React.Component {
 	// Handle Email Login
 	handleEmailLogin = () => {
 		loginWithEmail(this.state.email, this.state.password)
+				.catch(function (error) {
+						alert(error); // or show toast
+						localStorage.removeItem(firebaseAuthKey);
+				});
+		localStorage.setItem(firebaseAuthKey, "1");
+		this.setState({open:false});
+		this.props.hideLogin();
+	}
+
+	// Handle Email Login
+	handleEmailSignup = () => {
+		signupEmail(this.state.email, this.state.password)
 				.catch(function (error) {
 						alert(error); // or show toast
 						localStorage.removeItem(firebaseAuthKey);
@@ -100,8 +112,9 @@ class LoginDialog extends React.Component {
 			<Dialog
 				title="Login"
 				actions={actions}
-				modal={true}
 				open={this.state.open}
+				modal={false}
+				onRequestClose={this.handleCancel}
 			>
 			<div style={position}>
 				<div>
@@ -145,6 +158,12 @@ class LoginDialog extends React.Component {
 							backgroundColor="#dd4b39"
 							icon={<FontIcon className="fa fa-google-plus" style={iconStyles}/>}
 							onClick={this.handleGoogleLogin}
+					/>
+					<RaisedButton
+							label="New User? Sign Up"
+							labelColor={this.props.muiTheme.palette.alternateTextColor}
+							backgroundColor={this.props.muiTheme.palette.primary1Color}
+							onClick={this.handleEmailSignup}
 					/>
 				</div>
 			</div>
