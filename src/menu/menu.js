@@ -34,6 +34,9 @@ class Menu extends React.Component{
 			// Account Detection
 			firebaseAuth().onAuthStateChanged(user => {
 					if (user) {
+						if(!user.emailVerified) {
+							user.sendEmailVerification();
+						}
 						this.setState({loggedIn: true});
 							console.log("User signed in: ", JSON.stringify(user));
 							localStorage.removeItem(firebaseAuthKey);
