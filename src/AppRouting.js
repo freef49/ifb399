@@ -22,7 +22,7 @@ export default class AppRouted extends React.Component {
 		return(
 			<Router>
 				<div>
-					<Menu height="64px"/>
+					<Menu />
 					<Route exact path="/" component={Home}/>
 					<Route path="/details" component={Details}/>
 					<Route path="/login" component={Auth}/>

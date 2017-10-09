@@ -39,7 +39,7 @@ class SearchRouting extends React.Component {
 
 		// Default State Settings
 		this.state = {
-			height: '48px',
+			height: 'auto',
 			location: {
 				enabled: false,
 				latitude: null,
@@ -209,7 +209,7 @@ class SearchRouting extends React.Component {
 			position: 'fixed',
 			top: '64px',
 			width: '100%',
-			height: '48px',
+			height: 'auto',
 			color: this.props.muiTheme.palette.alternateTextColor,
 			background: this.props.muiTheme.palette.accent3Color,
 			opacity: '80%'
@@ -263,7 +263,7 @@ class SearchRouting extends React.Component {
 		return (
 			<div style={pageStyle}>
 				<Toolbar ref="searchBar" style={searchBarStyle}>
-					<ToolbarGroup style={{width: '70%', marginLeft: 20}} firstChild={true}>
+					<ToolbarGroup style={{width: '30%', marginLeft: 20}} firstChild={true}>
 						<AutoComplete
 							fullWidth
 							hintText="Search"
@@ -273,14 +273,16 @@ class SearchRouting extends React.Component {
 							dataSource={genres}
 							onUpdateInput={this.handleChangeGenres}
 						/>
-						<ToolbarSeparator style={{background: this.props.muiTheme.palette.borderColor}}/>
+					</ToolbarGroup>
+					<ToolbarGroup style={{width:'20%'}}>
+
 						<Geolocation
 							updateLocation={this.handleChangeLocation.bind(this)}
 							updateRange={this.handleChangeRange.bind(this)}
 						/>
-						<ToolbarSeparator style={{background: this.props.muiTheme.palette.borderColor}}/>
+
 					</ToolbarGroup>
-					<ToolbarGroup style={{width: '20%'}}>
+					<ToolbarGroup style={{width: '30%'}}>
 						<DateTime
 							currentDateTime={this.state.date.timestamp} updateDateTime={this.handleChangeDateTime.bind(this)}
 						/>

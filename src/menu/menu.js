@@ -29,7 +29,7 @@ class Menu extends React.Component{
 		render() {
 			const style = {
 				position: "fixed",
-				height: this.props.height,
+				height: "auto",
 				backgroundColor: this.props.muiTheme.palette.accent1Color
 			}
 			const titleStyle = {

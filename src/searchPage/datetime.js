@@ -46,15 +46,19 @@ class DateTime extends React.Component {
 		const timeStyle = {
 			width: 'auto'
 		}
+		const dateTimeStyle ={
+			display: 'flex'
+		}
 
 		return (
-			<div>
+			<div style={dateTimeStyle}>
 				<DatePicker
 					style={dateStyle}
 					hintText="Date"
 					hintStyle={hintStyle}
 					value = {this.state.timestamp}
 					textFieldStyle={dateStyle}
+					style={dateStyle}
 					onChange={this.handleChangeDate.bind(this)}
 				/>
 				<TimePicker
