@@ -1,6 +1,6 @@
 import React from "react";
 import {Avatar, RaisedButton} from "material-ui";
-import {logout} from "../helpers/auth";
+import {logout} from "../helpers/firebase";
 
 const appTokenKey = "appToken"; // also duplicated in Login.js
 export default class Logout extends React.Component {
@@ -21,7 +21,6 @@ export default class Logout extends React.Component {
             // this.props.history.push("/login");
             console.log("user signed out from firebase");
         }.bind(this));
-
     }
 
     render() {
