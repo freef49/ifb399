@@ -226,7 +226,16 @@ class SearchRouting extends React.Component {
 			height: 'auto',
 			color: this.props.muiTheme.palette.alternateTextColor,
 			background: this.props.muiTheme.palette.accent3Color,
-			opacity: '80%'
+			opacity: '80%',
+			display: 'flex',
+			display: '-webkit-box',
+  		display: '-moz-box',
+  		display: '-ms-flexbox',
+  		display: '-webkit-flex',
+  		display: 'flex',
+
+  		flexFlow: 'row wrap',
+  		justifyContent: 'space-around'
 		}
 		const hintStyle = {
 			color: this.props.muiTheme.palette.alternateTextColor
@@ -277,7 +286,7 @@ class SearchRouting extends React.Component {
 		return (
 			<div style={pageStyle}>
 				<Toolbar ref="searchBar" style={searchBarStyle}>
-					<ToolbarGroup>
+					<ToolbarGroup style={{width:'18rem'}}>
 						<AutoComplete
 							fullWidth
 							hintText="Search"
