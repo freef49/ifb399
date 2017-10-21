@@ -25,11 +25,13 @@ const genres = [
 	'Comedy'
 ];
 
+const appTokenKey = "appToken";
+
 class SearchRouting extends React.Component {
 	constructor(props) {
 		super(props);
 		// Search Filter Handlers
-		this.handleChange = this.handleChange.bind(this);
+		//this.handleChange = this.handleChange.bind(this);
 		this.handleChangeGenres = this.handleChangeGenres.bind(this);
 
 		// Default DateTime Settings
@@ -37,8 +39,12 @@ class SearchRouting extends React.Component {
 		let date = currentDate.getDate() + '-' + (currentDate.getMonth()+1) + '-' + currentDate.getFullYear();
 		let time = currentDate.getHours() + ':' + currentDate.getMinutes();
 
+		// Get User Token
+		let user = localStorage.getItem(appTokenKey);
+
 		// Default State Settings
 		this.state = {
+			user: user,
 			height: 'auto',
 			location: {
 				enabled: false,
@@ -99,6 +105,12 @@ class SearchRouting extends React.Component {
 		//WARNING THIS WILL CALL OVER AND OVER AGAIN AFTER A SEARCH IS MADE.
 		//need to pull the last set state, that is what is causing the loop
 
+		// Get User Token
+		let user = localStorage.getItem(appTokenKey);
+		if(this.state.user !== user) {
+			this.setState({user: user});
+		}
+
 		function getResults(results) {
 			if (Array.isArray(results)) {
 				console.log(results);
@@ -144,8 +156,10 @@ class SearchRouting extends React.Component {
 		fetch(proxyUrl + targetUrl).then(result => result.json())
 		//.then(result => getResults(result))
 		//.then(items=>capturedJson = items)
-		.then(items => this.setState({items}));
-
+		.then(items =>(JSON.stringify(this.state.items) === JSON.stringify(items))
+			? null
+			: this.setState({items})
+		);
 	}
 
 	// Update genres
@@ -189,9 +203,9 @@ class SearchRouting extends React.Component {
 		});
 	}
 
-	handleChange(event) {
+/*	handleChange(event) {
 		this.setState({search: event.target.value});
-	}
+	}*/
 
 	// Was in the parent
 	// <Search value={this.state.value} onChangeValue={this.handleChange.bind(this)}/>
@@ -293,12 +307,14 @@ class SearchRouting extends React.Component {
 					{this.state.items.map((events, index)=>{
 							return (
 								<EventCard
+									loggedIn = {(this.state.user != null)}
 									key={index}
 									image={events.image}
 									date={events.date}
 									title={events.name}
 									artist={events.artist}
 									link={events.id}
+									favourited={events.favourited}
 								/>
 							)
 						})
@@ -311,6 +327,7 @@ class SearchRouting extends React.Component {
 							<source src={VideoMP4} type="video/mp4" />
 						</video>
 						<div ref="overlay" style={overlayStyle}>
+							<p style={infoStyle}>{this.state.user}</p>
 							<div style={infoStyle} className="type-wrap">
 								Search for&nbsp;
 								<span
