@@ -31,8 +31,8 @@ class Favourite extends React.Component {
 				// Send request to add favourite for user
 				// Add Favourite
 				let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
-				let targetUrl = 'http://128.199.133.10:3000/api/users/favourites/add';
-				fetch(proxyUrl+targetUrl, {
+				let targetUrl = '/api/users/favourites/add';
+				fetch(targetUrl, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -42,6 +42,8 @@ class Favourite extends React.Component {
 						'token': token
 					})
 				})
+				.then(response => response.json())
+				.then(body => console.log(body));
 			}).catch(function(error) {
 				console.log(error);
 			});
