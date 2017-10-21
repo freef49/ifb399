@@ -277,7 +277,7 @@ class SearchRouting extends React.Component {
 		return (
 			<div style={pageStyle}>
 				<Toolbar ref="searchBar" style={searchBarStyle}>
-					<ToolbarGroup style={{width: '30%', marginLeft: 20}} firstChild={true}>
+					<ToolbarGroup>
 						<AutoComplete
 							fullWidth
 							hintText="Search"
@@ -288,19 +288,19 @@ class SearchRouting extends React.Component {
 							onUpdateInput={this.handleChangeGenres}
 						/>
 					</ToolbarGroup>
-					<ToolbarGroup style={{width:'20%'}}>
 
-						<Geolocation
-							updateLocation={this.handleChangeLocation.bind(this)}
-							updateRange={this.handleChangeRange.bind(this)}
-						/>
+				<ToolbarGroup>
+					<Geolocation
+						updateLocation={this.handleChangeLocation.bind(this)}
+						updateRange={this.handleChangeRange.bind(this)}
+					/>
+				</ToolbarGroup>
+				<ToolbarGroup>
+					<DateTime
+						currentDateTime={this.state.date.timestamp} updateDateTime={this.handleChangeDateTime.bind(this)}
+					/>
+				</ToolbarGroup>
 
-					</ToolbarGroup>
-					<ToolbarGroup style={{width: '30%'}}>
-						<DateTime
-							currentDateTime={this.state.date.timestamp} updateDateTime={this.handleChangeDateTime.bind(this)}
-						/>
-					</ToolbarGroup>
 				</Toolbar>
 				{this.state.items.length > 0 ? (
 					<div ref="page" style={pageStyle}>
