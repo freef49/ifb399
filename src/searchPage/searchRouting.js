@@ -307,13 +307,13 @@ class SearchRouting extends React.Component {
 					{this.state.items.map((events, index)=>{
 							return (
 								<EventCard
-									loggedIn = {(this.state.user != null)}
+									user = {this.state.user}
 									key={index}
 									image={events.image}
 									date={events.date}
 									title={events.name}
 									artist={events.artist}
-									link={events.id}
+									eventID={events.id}
 									favourited={events.favourited}
 								/>
 							)
@@ -327,7 +327,6 @@ class SearchRouting extends React.Component {
 							<source src={VideoMP4} type="video/mp4" />
 						</video>
 						<div ref="overlay" style={overlayStyle}>
-							<p style={infoStyle}>{this.state.user}</p>
 							<div style={infoStyle} className="type-wrap">
 								Search for&nbsp;
 								<span
