@@ -24,11 +24,11 @@ class EventCard extends React.Component {
         <Date date={this.props.date} />
         <Title name={this.props.title} />
         <Artist artist={this.props.artist} />
-        <EventButton link={this.props.link} />
+        <EventButton link={this.props.eventID} />
 				{
 					// Add Favourite Button for Logged In Users
-					(this.props.loggedIn === true)
-						? <Favourite favourited={this.props.favourited} />
+					(this.props.user != null)
+						? <Favourite eventID={this.props.eventID} favourited={this.props.favourited} />
 						: null
 				}
       </Paper>
