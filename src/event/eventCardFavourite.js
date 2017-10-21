@@ -4,6 +4,10 @@ import FavouriteIcon from 'material-ui/svg-icons/action/favorite';
 import FavouriteBorderIcon from 'material-ui/svg-icons/action/favorite-border';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
+import {firebaseAuth} from "../constraints/constants";
+
+const appTokenKey = "appToken";
+
 class Favourite extends React.Component {
 	constructor(props) {
 		super(props);
@@ -17,35 +21,37 @@ class Favourite extends React.Component {
 		// Check favourited status
 		if (this.state.favourited === true) {
 			// Remove Favourite
+			console.log("Remove Favourite");
 		} else {
-			/*
-			// Add Favourite
-			var http = require('http');
-			var body = JSON.stringify({
-			    "event": result[2][0]['@id'],
-						"name": req.body.name
+			let eventID = this.props.eventID;
+			console.log(eventID);
+			// Get User ID token
+			firebaseAuth().currentUser.getIdToken().then(function(token) {
+				console.log(token);
+				// Send request to add favourite for user
+				// Add Favourite
+				let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
+				let targetUrl = 'http://128.199.133.10:3000/api/users/favourites/add';
+				fetch(proxyUrl+targetUrl, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
 					},
-					"token": "Content Updated"
+					body: JSON.stringify({
+						'event': eventID,
+						'token': token
+					})
+				})
+			}).catch(function(error) {
+				console.log(error);
 			});
 
-			var request = new http.ClientRequest({
-			    hostname: "localhost",
-			    port: 3000,
-			    path: "/api/users/favourites/add",
-			    method: "POST",
-			    headers: {
-			        "Content-Type": "application/json",
-			        "Content-Length": Buffer.byteLength(body)
-			    }
-			})
-
-			request.end(body);*/
 		}
 	}
 
 	render() {
 		return (
-			<IconButton tooltip="Favourite" touch={true} tooltipPosition="bottom-right">
+			<IconButton onClick={this.handleClick.bind(this)} tooltip="Favourite" touch={true} tooltipPosition="bottom-right">
 	      { // Get Icon based on Favourite Status
 					(this.state.favourited === true)
 						? <FavouriteIcon />
