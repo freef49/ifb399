@@ -27,7 +27,7 @@ class Favourite extends React.Component {
 			console.log(eventID);
 			// Get User ID token
 			firebaseAuth().currentUser.getIdToken().then(function(token) {
-				console.log(token);
+				//console.log(token);
 				// Send request to add favourite for user
 				// Add Favourite
 				let proxyUrl = 'http://cors-anywhere.herokuapp.com/';

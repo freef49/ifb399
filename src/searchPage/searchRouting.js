@@ -327,7 +327,6 @@ class SearchRouting extends React.Component {
 							<source src={VideoMP4} type="video/mp4" />
 						</video>
 						<div ref="overlay" style={overlayStyle}>
-							<p style={infoStyle}>{this.state.user}</p>
 							<div style={infoStyle} className="type-wrap">
 								Search for&nbsp;
 								<span
