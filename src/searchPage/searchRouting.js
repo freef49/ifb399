@@ -1,6 +1,7 @@
 import React from 'react';
 // Classes
 import EventCard from '../event/eventCard.js'
+import SuggestedEventCard from '../event/suggestedEventCard.js'
 import Geolocation from './geolocation.js';
 import DateTime from './datetime.js';
 // Assets
@@ -61,6 +62,7 @@ class SearchRouting extends React.Component {
 				time: time
 			},
 			items: [],
+			suggested: [],
 			search: ''
 		};
 	}
@@ -125,8 +127,7 @@ class SearchRouting extends React.Component {
 		//Create Search Request
 		let searchState = this.state.search;
 		let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
-		// let targetUrl = 'https://brizzy-music.herokuapp.com/api/events/search/?genre=' + searchState;
-		let targetUrl = 'http://sob.fun:3000/api/events/search/?genres=' + searchState;
+		let targetUrl = '/api/events/search/?genres=' + searchState;
 		// console.log(targetUrl);
 
 		// Location Search
@@ -141,8 +142,6 @@ class SearchRouting extends React.Component {
 		}
 
 		// Date Search
-		// TODO
-		// Date Range Search
 		let date = this.state.date.date;
 		let time = this.state.date.time;
 		if(this.state.date.enabled) {
@@ -152,15 +151,21 @@ class SearchRouting extends React.Component {
 			}
 		}
 
-		// User Favourite Check
+		// User Favourite Check and Suggested Events
 		let userObject = firebaseAuth().currentUser;
 		if(userObject) {
 			targetUrl += '&user=' + userObject.uid;
+
+			// Get Suggested Event for User
+			let suggestEventURL = '/api/events/suggested?user=' + userObject.uid;
+			fetch(suggestEventURL).then(result => result.json())
+			.then(suggested =>(JSON.stringify(this.state.suggested) === JSON.stringify(suggested))
+				? null
+				: this.setState({suggested})
+			);
 		}
 
-		//TODO
-		// Suburb Search
-
+		// Search
 		fetch(targetUrl).then(result => result.json())
 		//.then(result => getResults(result))
 		//.then(items=>capturedJson = items)
@@ -321,6 +326,26 @@ class SearchRouting extends React.Component {
 				</Toolbar>
 				{this.state.items.length > 0 ? (
 					<div ref="page" style={pageStyle}>
+						<div>
+							{(this.state.user != null) ? (
+								this.state.suggested.map((events, index)=>{
+									return (
+										<SuggestedEventCard
+											user = {this.state.user}
+											key={index}
+											image={events.image}
+											date={events.date}
+											title={events.name}
+											artist={events.artist}
+											eventID={events.id}
+											favourited={events.favourited}
+										/>
+									)
+								})
+							) : (
+								null
+							)}
+						</div>
 					{this.state.items.map((events, index)=>{
 							return (
 								<EventCard
@@ -352,7 +377,7 @@ class SearchRouting extends React.Component {
 								/>
 							</div>
 						</div>
-					</div>
+						</div>
 				)}
 			</div>
 		);
