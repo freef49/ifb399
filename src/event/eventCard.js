@@ -10,8 +10,8 @@ import Favourite from './eventCardFavourite.js';
 class EventCard extends React.Component {
   render() {
     const style = {
-      height: 250,
-      width: 250,
+      height: 300,
+      width: 300,
       margin: 20,
       padding: "10px 20px",
       textAlign: 'center',
