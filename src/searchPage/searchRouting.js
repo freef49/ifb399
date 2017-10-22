@@ -13,6 +13,8 @@ import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-mo
 import muiThemeable from 'material-ui/styles/muiThemeable';
 // Additional Libraries
 import Typed from 'typed.js';
+// Firebase
+import {firebaseAuth} from "../constraints/constants";
 
 // Temporary Hardcoded Genre Suggestions
 const genres = [
@@ -124,7 +126,7 @@ class SearchRouting extends React.Component {
 		let searchState = this.state.search;
 		let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
 		// let targetUrl = 'https://brizzy-music.herokuapp.com/api/events/search/?genre=' + searchState;
-		let targetUrl = 'http://128.199.133.10:3000/api/events/search/?genres=' + searchState;
+		let targetUrl = '/api/events/search/?genres=' + searchState;
 		// console.log(targetUrl);
 
 		// Location Search
@@ -150,10 +152,16 @@ class SearchRouting extends React.Component {
 			}
 		}
 
+		// User Favourite Check
+		let userObject = firebaseAuth().currentUser;
+		if(userObject) {
+			targetUrl += '&user=' + userObject.uid;
+		}
+
 		//TODO
 		// Suburb Search
 
-		fetch(proxyUrl + targetUrl).then(result => result.json())
+		fetch(targetUrl).then(result => result.json())
 		//.then(result => getResults(result))
 		//.then(items=>capturedJson = items)
 		.then(items =>(JSON.stringify(this.state.items) === JSON.stringify(items))

@@ -16,15 +16,20 @@ class Favourite extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		this.setState({favourited: this.props.favourited});
+	}
+
 	// Handle Favourite Click
 	handleClick(event) {
 		// Check favourited status
-		if (this.state.favourited === true) {
+		if (this.state.favourited == 1) {
 			// Remove Favourite
 			console.log("Remove Favourite");
+			this.setState({favourited: 0});
 		} else {
 			let eventID = this.props.eventID;
-			console.log(eventID);
+			//console.log(eventID);
 			// Get User ID token
 			firebaseAuth().currentUser.getIdToken().then(function(token) {
 				//console.log(token);
@@ -47,7 +52,7 @@ class Favourite extends React.Component {
 			}).catch(function(error) {
 				console.log(error);
 			});
-
+			this.setState({favourited: 1});
 		}
 	}
 
@@ -55,7 +60,7 @@ class Favourite extends React.Component {
 		return (
 			<IconButton onClick={this.handleClick.bind(this)} tooltip="Favourite" touch={true} tooltipPosition="bottom-right">
 	      { // Get Icon based on Favourite Status
-					(this.state.favourited === true)
+					(this.props.favourited == 1)
 						? <FavouriteIcon />
 						: <FavouriteBorderIcon />
 				}
