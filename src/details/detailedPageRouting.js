@@ -17,7 +17,7 @@ class DetailedPageRouting extends React.Component {
   componentDidMount() {
     let detailsPath = window.location.pathname;
     let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
-    let targetUrl = 'http://128.199.133.10:3000/api/events/'+detailsPath;
+    let targetUrl = 'http://sob.fun:3000/api/events/'+detailsPath;
     fetch(proxyUrl+targetUrl).then(result => result.json())
       .then(detail => this.setState({items: detail}));
 
@@ -28,7 +28,24 @@ class DetailedPageRouting extends React.Component {
 // const event1 = {this.state.items[0]};
 
   render() {
+    const sideBySide = {
+      width: '100%',
+      height: 'auto',
+      opacity: '80%',
+      display: 'flex',
+      display: '-webkit-box',
+      display: '-moz-box',
+      display: '-ms-flexbox',
+      display: '-webkit-flex',
+      display: 'flex',
 
+      flexFlow: 'row wrap',
+      justifyContent: 'space-around'
+    }
+
+    const fullWidthButtons ={
+      marginTop: '20px'
+    }
 
     let venue = this.state.items.venue
       ? Object.create(this.state.items.venue)
@@ -40,17 +57,33 @@ class DetailedPageRouting extends React.Component {
 
     return (
 
-      <div>
-        <h1>{this.state.items.title}</h1>
-        <h2>{this.state.items.genre}</h2>
-        <Image image={this.state.items.image}/>
-        <Date date={this.state.items.date}/>
-        <RaisedButton label="Get Tickets!" primary={true} fullWidth={true} href={this.state.items.link}/>
-        <h2>Playing at the {venue.name}</h2>
-        <div><img src={venue.image} alt={venue.name}/></div>
-        <RaisedButton label="Get Directions" secondary={true} fullWidth={true} href={venueLocationURL}/>
-        <h3>Some event details</h3>
-        <p>{this.state.items.description}</p>
+      <div style={{paddingTop:"90px"}}>
+        <div style={sideBySide}>
+          <div style={{paddingTop:"20px"}}>
+            <h1 style={{marginTop:"-20px",padding:"0 10px 10px"}}>{this.state.items.name}</h1>
+            <h2 style={{marginTop:"-20px",padding:"0 10px 10px"}}>{this.state.items.genres}</h2>
+<Date date={this.state.items.date}/>
+          </div>
+          <div>
+              <Image image={this.state.items.image}/>
+
+          </div>
+        </div>
+          <RaisedButton label="Get Tickets!" primary={true} fullWidth={true} href={this.state.items.link} style={fullWidthButtons}/>
+          <RaisedButton label="Get Directions" secondary={true} fullWidth={true} href={venueLocationURL} style={fullWidthButtons}/>
+
+          <div style={sideBySide}>
+            <div style={{maxWidth:"100%"}}>
+              <h2 style={{padding:"0 10px 10px"}}>Playing at the {venue.name}</h2>
+              <img src={venue.image} alt={venue.name}/>
+            </div>
+            <div style={{maxWidth:"40rem"}}>
+              <h3 style={{padding:"0 10px 10px"}}>Some event details</h3>
+              <p style={{padding:"0 20px 10px"}}>{this.state.items.description}</p>
+            </div>
+          </div>
+
+
       </div>
 
     );

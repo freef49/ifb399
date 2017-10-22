@@ -3,8 +3,8 @@ import React from 'react';
 export class Image extends React.Component {
   render() {
     const Imagestyle = {
-      height: 100,
-      width: 200,
+      height: 300,
+      width: 500,
 
       marginBottom: 4,
       backgroundImage:"url(" + this.props.image + ")",

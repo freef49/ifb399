@@ -126,7 +126,7 @@ class SearchRouting extends React.Component {
 		let searchState = this.state.search;
 		let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
 		// let targetUrl = 'https://brizzy-music.herokuapp.com/api/events/search/?genre=' + searchState;
-		let targetUrl = '/api/events/search/?genres=' + searchState;
+		let targetUrl = 'http://sob.fun:3000/api/events/search/?genres=' + searchState;
 		// console.log(targetUrl);
 
 		// Location Search
