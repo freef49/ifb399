@@ -61,7 +61,7 @@ class DateTime extends React.Component {
 					style={dateStyle}
 					onChange={this.handleChangeDate.bind(this)}
 				/>
-				<TimePicker
+				{/* <TimePicker
 					style={timeStyle}
 					format="ampm"
 					hintText="Time"
@@ -69,7 +69,7 @@ class DateTime extends React.Component {
 					value={this.state.timestamp}
 					textFieldStyle={dateStyle}
 					onChange={this.handleChangeTime.bind(this)}
-				/>
+				/> */}
 			</div>
 		);
 	}

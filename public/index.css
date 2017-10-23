@@ -1,6 +1,11 @@
+html{
+  background-repeat: repeat;
+  background-image: url("doodles.png");
+}
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
+
 }
 
 ol, ul {

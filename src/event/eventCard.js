@@ -12,7 +12,7 @@ class EventCard extends React.Component {
     const style = {
       height: 300,
       width: 300,
-      margin: 20,
+      margin: 10,
       padding: "10px 20px",
       textAlign: 'center',
       display: 'inline-block',

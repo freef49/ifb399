@@ -126,7 +126,7 @@ class SearchRouting extends React.Component {
 		let searchState = this.state.search;
 		let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
 		// let targetUrl = 'https://brizzy-music.herokuapp.com/api/events/search/?genre=' + searchState;
-		let targetUrl = 'http://sob.fun:3000/api/events/search/?genres=' + searchState;
+		let targetUrl = '/api/events/search/?genres=' + searchState;
 		// console.log(targetUrl);
 
 		// Location Search
@@ -225,7 +225,17 @@ class SearchRouting extends React.Component {
 			top: '112px',
 			width: '100%',
 			height: '100%',
-			backgroundColor: this.props.muiTheme.palette.canvasColor
+			backgroundColor: 'rgba(0,0,0,0)',
+			display: 'flex',
+			display: '-webkit-box',
+  		display: '-moz-box',
+  		display: '-ms-flexbox',
+  		display: '-webkit-flex',
+  		display: 'flex',
+
+  		flexFlow: 'row wrap',
+  		justifyContent: 'space-evenly'
+
 		}
 		const searchBarStyle = {
 			position: 'fixed',
@@ -243,7 +253,8 @@ class SearchRouting extends React.Component {
   		display: 'flex',
 
   		flexFlow: 'row wrap',
-  		justifyContent: 'space-around'
+  		justifyContent: 'space-around',
+			zIndex:'1000'
 		}
 		const hintStyle = {
 			color: this.props.muiTheme.palette.alternateTextColor

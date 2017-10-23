@@ -17,8 +17,8 @@ class DetailedPageRouting extends React.Component {
   componentDidMount() {
     let detailsPath = window.location.pathname;
     let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
-    let targetUrl = 'http://sob.fun:3000/api/events/'+detailsPath;
-    fetch(proxyUrl+targetUrl).then(result => result.json())
+    let targetUrl = '/api/events/'+detailsPath;
+    fetch(targetUrl).then(result => result.json())
       .then(detail => this.setState({items: detail}));
 
   }
