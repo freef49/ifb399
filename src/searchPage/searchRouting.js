@@ -14,8 +14,8 @@ import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-mo
 import muiThemeable from 'material-ui/styles/muiThemeable';
 // Additional Libraries
 import Typed from 'typed.js';
-// Firebase
-import {firebaseAuth} from "../constraints/constants";
+// Firebase & Target Address
+import {firebaseAuth, targetAddress} from "../constraints/constants";
 
 // Temporary Hardcoded Genre Suggestions
 const genres = [
@@ -39,7 +39,7 @@ class SearchRouting extends React.Component {
 
 		// Default DateTime Settings
 		let currentDate = new Date();
-		let date = currentDate.getDate() + '-' + (currentDate.getMonth()+1) + '-' + currentDate.getFullYear();
+		let date = currentDate.getFullYear() + '-' + (currentDate.getMonth()+1) + '-' + currentDate.getDate();
 		let time = currentDate.getHours() + ':' + currentDate.getMinutes();
 
 		// Get User Token
@@ -127,7 +127,7 @@ class SearchRouting extends React.Component {
 		//Create Search Request
 		let searchState = this.state.search;
 		let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
-		let targetUrl = '/api/events/search/?genres=' + searchState;
+		let targetUrl = targetAddress+'/api/events/search/?genres=' + searchState;
 		// console.log(targetUrl);
 
 		// Location Search
@@ -157,7 +157,7 @@ class SearchRouting extends React.Component {
 			targetUrl += '&user=' + userObject.uid;
 
 			// Get Suggested Event for User
-			let suggestEventURL = '/api/events/suggested?user=' + userObject.uid;
+			let suggestEventURL = targetAddress+'/api/events/suggested?user=' + userObject.uid;
 			fetch(suggestEventURL).then(result => result.json())
 			.then(suggested =>(JSON.stringify(this.state.suggested) === JSON.stringify(suggested))
 				? null
@@ -203,7 +203,7 @@ class SearchRouting extends React.Component {
 	// Update Date Value
 	handleChangeDateTime(newTimestamp) {
 		// Set Date String
-		let date = newTimestamp.getDate() + '-' + (newTimestamp.getMonth()+1) + '-' + newTimestamp.getFullYear();
+		let date = newTimestamp.getFullYear() + '-' + (newTimestamp.getMonth()+1) + '-' + newTimestamp.getDate();
 		// Set Time String
 		let time = newTimestamp.getHours() + ':' + ('0' + newTimestamp.getMinutes()).slice(-2);
 		// Update State Values for Date and Time

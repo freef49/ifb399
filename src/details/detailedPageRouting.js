@@ -2,6 +2,9 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Image from './detailedPageImage.js'
 import Date from './detailedPageDate.js'
+import muiThemeable from 'material-ui/styles/muiThemeable';
+// Target Address
+import {targetAddress} from "../constraints/constants";
 
 class DetailedPageRouting extends React.Component {
   constructor(props) {
@@ -17,8 +20,8 @@ class DetailedPageRouting extends React.Component {
   componentDidMount() {
     let detailsPath = window.location.pathname;
     let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
-    let targetUrl = 'http://sob.fun:3000/api/events/'+detailsPath;
-    fetch(proxyUrl+targetUrl).then(result => result.json())
+    let targetUrl = targetAddress+'/api/events/'+detailsPath;
+    fetch(targetUrl).then(result => result.json())
       .then(detail => this.setState({items: detail}));
 
   }
@@ -90,4 +93,4 @@ class DetailedPageRouting extends React.Component {
   }
 }
 
-export default DetailedPageRouting;
+export default muiThemeable()(DetailedPageRouting);

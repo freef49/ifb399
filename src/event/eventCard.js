@@ -23,7 +23,7 @@ class EventCard extends React.Component {
 
     return (
       <Paper style={style} zDepth={3} >
-        <Image image={(this.props.image == "") ? DefaultImage : this.props.image}/>
+        <Image image={(this.props.image == null) ? DefaultImage : this.props.image}/>
         <Date date={this.props.date} />
         <Title name={this.props.title} />
         <Artist artist={this.props.artist} />
