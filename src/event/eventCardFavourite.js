@@ -4,7 +4,7 @@ import FavouriteIcon from 'material-ui/svg-icons/action/favorite';
 import FavouriteBorderIcon from 'material-ui/svg-icons/action/favorite-border';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
-import {firebaseAuth} from "../constraints/constants";
+import {firebaseAuth, targetAddress} from "../constraints/constants";
 
 const appTokenKey = "appToken";
 
@@ -36,7 +36,7 @@ class Favourite extends React.Component {
 				// Send request to add favourite for user
 				// Add Favourite
 				let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
-				let targetUrl = '/api/users/favourites/add';
+				let targetUrl = targetAddress+'/api/users/favourites/add';
 				fetch(targetUrl, {
 					method: 'POST',
 					headers: {

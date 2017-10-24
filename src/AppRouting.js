@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 
 import EventCard from './event/eventCard.js'
 import DetailedPageRouting from './details/detailedPageRouting.js';
+import FavouriteRouting from './favourites/favouriteRouting.js';
 import SearchRouting from './searchPage/searchRouting.js';
 
 import Menu from './menu/menu.js';
@@ -25,6 +26,7 @@ export default class AppRouted extends React.Component {
 					<Menu />
 					<Route exact path="/" component={Home}/>
 					<Route path="/details" component={Details}/>
+					<Route path="/favourites" component={Favourites}/>
 					<Route path="/login" component={Auth}/>
 					<Route path="/logout" component={Deauth}/>
 				</div>
@@ -44,6 +46,11 @@ const Home = () => (
 const Details = () => (
 	<div>
 		<DetailedPageRouting />
+	</div>
+)
+const Favourites = () => (
+	<div>
+		<FavouriteRouting />
 	</div>
 )
 const Auth = () => (

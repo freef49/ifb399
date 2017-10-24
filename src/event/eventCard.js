@@ -7,6 +7,9 @@ import Artist from './eventCardArtist.js';
 import EventButton from './eventCardButton.js';
 import Favourite from './eventCardFavourite.js';
 
+// Assets
+import DefaultImage from '../assets/images/default.png';
+
 class EventCard extends React.Component {
   render() {
     const style = {
@@ -20,7 +23,7 @@ class EventCard extends React.Component {
 
     return (
       <Paper style={style} zDepth={3} >
-        <Image image={this.props.image}/>
+        <Image image={(this.props.image == null) ? DefaultImage : this.props.image}/>
         <Date date={this.props.date} />
         <Title name={this.props.title} />
         <Artist artist={this.props.artist} />

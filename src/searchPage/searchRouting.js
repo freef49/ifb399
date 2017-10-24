@@ -1,6 +1,7 @@
 import React from 'react';
 // Classes
 import EventCard from '../event/eventCard.js'
+import SuggestedEventCard from '../event/suggestedEventCard.js'
 import Geolocation from './geolocation.js';
 import DateTime from './datetime.js';
 // Assets
@@ -13,8 +14,8 @@ import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-mo
 import muiThemeable from 'material-ui/styles/muiThemeable';
 // Additional Libraries
 import Typed from 'typed.js';
-// Firebase
-import {firebaseAuth} from "../constraints/constants";
+// Firebase & Target Address
+import {firebaseAuth, targetAddress} from "../constraints/constants";
 
 // Temporary Hardcoded Genre Suggestions
 const genres = [
@@ -38,7 +39,7 @@ class SearchRouting extends React.Component {
 
 		// Default DateTime Settings
 		let currentDate = new Date();
-		let date = currentDate.getDate() + '-' + (currentDate.getMonth()+1) + '-' + currentDate.getFullYear();
+		let date = currentDate.getFullYear() + '-' + (currentDate.getMonth()+1) + '-' + currentDate.getDate();
 		let time = currentDate.getHours() + ':' + currentDate.getMinutes();
 
 		// Get User Token
@@ -61,6 +62,7 @@ class SearchRouting extends React.Component {
 				time: time
 			},
 			items: [],
+			suggested: [],
 			search: ''
 		};
 	}
@@ -125,8 +127,12 @@ class SearchRouting extends React.Component {
 		//Create Search Request
 		let searchState = this.state.search;
 		let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
+<<<<<<< HEAD
 		// let targetUrl = 'https://brizzy-music.herokuapp.com/api/events/search/?genre=' + searchState;
 		let targetUrl = '/api/events/search/?genres=' + searchState;
+=======
+		let targetUrl = targetAddress+'/api/events/search/?genres=' + searchState;
+>>>>>>> 35868daf007e40f8fca26fea129bc3063363345e
 		// console.log(targetUrl);
 
 		// Location Search
@@ -141,8 +147,6 @@ class SearchRouting extends React.Component {
 		}
 
 		// Date Search
-		// TODO
-		// Date Range Search
 		let date = this.state.date.date;
 		let time = this.state.date.time;
 		if(this.state.date.enabled) {
@@ -152,15 +156,21 @@ class SearchRouting extends React.Component {
 			}
 		}
 
-		// User Favourite Check
+		// User Favourite Check and Suggested Events
 		let userObject = firebaseAuth().currentUser;
 		if(userObject) {
 			targetUrl += '&user=' + userObject.uid;
+
+			// Get Suggested Event for User
+			let suggestEventURL = targetAddress+'/api/events/suggested?user=' + userObject.uid;
+			fetch(suggestEventURL).then(result => result.json())
+			.then(suggested =>(JSON.stringify(this.state.suggested) === JSON.stringify(suggested))
+				? null
+				: this.setState({suggested})
+			);
 		}
 
-		//TODO
-		// Suburb Search
-
+		// Search
 		fetch(targetUrl).then(result => result.json())
 		//.then(result => getResults(result))
 		//.then(items=>capturedJson = items)
@@ -198,7 +208,7 @@ class SearchRouting extends React.Component {
 	// Update Date Value
 	handleChangeDateTime(newTimestamp) {
 		// Set Date String
-		let date = newTimestamp.getDate() + '-' + (newTimestamp.getMonth()+1) + '-' + newTimestamp.getFullYear();
+		let date = newTimestamp.getFullYear() + '-' + (newTimestamp.getMonth()+1) + '-' + newTimestamp.getDate();
 		// Set Time String
 		let time = newTimestamp.getHours() + ':' + ('0' + newTimestamp.getMinutes()).slice(-2);
 		// Update State Values for Date and Time
@@ -332,6 +342,26 @@ class SearchRouting extends React.Component {
 				</Toolbar>
 				{this.state.items.length > 0 ? (
 					<div ref="page" style={pageStyle}>
+						<div>
+							{(this.state.user != null) ? (
+								this.state.suggested.map((events, index)=>{
+									return (
+										<SuggestedEventCard
+											user = {this.state.user}
+											key={index}
+											image={events.image}
+											date={events.date}
+											title={events.name}
+											artist={events.artist}
+											eventID={events.id}
+											favourited={events.favourited}
+										/>
+									)
+								})
+							) : (
+								null
+							)}
+						</div>
 					{this.state.items.map((events, index)=>{
 							return (
 								<EventCard
@@ -363,7 +393,7 @@ class SearchRouting extends React.Component {
 								/>
 							</div>
 						</div>
-					</div>
+						</div>
 				)}
 			</div>
 		);

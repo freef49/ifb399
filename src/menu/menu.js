@@ -110,8 +110,12 @@ class Menu extends React.Component{
 								{this.state.loggedIn == false ? (
 									<MenuItem onClick={this.showLoginOverlay} primaryText="Login"></MenuItem>
 								):(
-									<MenuItem onClick={this.handleLogout}
-									primaryText="Logout"></MenuItem>
+									<div>
+										<MenuItem onClick={this.handleLogout}
+										primaryText="Logout"></MenuItem>
+										<MenuItem onClick={this.handleToggle} containerElement={<Link to={"/favourites/"+localStorage.getItem(appTokenKey)} />}
+										primaryText="Favourites"></MenuItem>
+									</div>
 								)}
 							</Drawer>
 							<div>

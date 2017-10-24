@@ -1,7 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
-
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 export class EventButton extends React.Component {
 
@@ -16,6 +16,7 @@ export class EventButton extends React.Component {
           label="Learn More..."
           primary={true}
           containerElement={<Link to={detailedLink}/>}
+					buttonStyle={{backgroundColor: this.props.muiTheme.palette.accent1Color}}
         />
 
   );
@@ -23,4 +24,4 @@ export class EventButton extends React.Component {
 }}
 
 
-export default EventButton;
+export default muiThemeable()(EventButton);
