@@ -2,6 +2,7 @@ import React from 'react';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import muiThemeable from 'material-ui/styles/muiThemeable';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class DateTime extends React.Component {
 	constructor(props) {
@@ -36,6 +37,10 @@ class DateTime extends React.Component {
 		this.props.updateDateTime(timestamp);
 	}
 
+// resetDate(){
+// 	this.props.updateDateTime("undefined");
+// }
+
 	render() {
 		const hintStyle = {
 			color: this.props.muiTheme.palette.alternateTextColor
@@ -61,6 +66,12 @@ class DateTime extends React.Component {
 					style={dateStyle}
 					onChange={this.handleChangeDate.bind(this)}
 				/>
+				{/* <RaisedButton
+          label="Reset"
+          primary={true}
+          onClick={this.resetDate}
+					buttonStyle={{backgroundColor: this.props.muiTheme.palette.accent1Color}}
+        /> */}
 				{/* <TimePicker
 					style={timeStyle}
 					format="ampm"

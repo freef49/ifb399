@@ -14,7 +14,7 @@ export class Date extends React.Component {
     }
 
 
-   return <p style={style}><strong>{date.day}</strong> - {date.time}</p>;
+   return <p style={style}><span className="whiteBackground"><strong>{date.day}</strong> - {date.time}</span></p>;
   }
 }
 

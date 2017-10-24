@@ -127,12 +127,7 @@ class SearchRouting extends React.Component {
 		//Create Search Request
 		let searchState = this.state.search;
 		let proxyUrl = 'http://cors-anywhere.herokuapp.com/';
-<<<<<<< HEAD
-		// let targetUrl = 'https://brizzy-music.herokuapp.com/api/events/search/?genre=' + searchState;
-		let targetUrl = '/api/events/search/?genres=' + searchState;
-=======
 		let targetUrl = targetAddress+'/api/events/search/?genres=' + searchState;
->>>>>>> 35868daf007e40f8fca26fea129bc3063363345e
 		// console.log(targetUrl);
 
 		// Location Search
@@ -163,6 +158,7 @@ class SearchRouting extends React.Component {
 
 			// Get Suggested Event for User
 			let suggestEventURL = targetAddress+'/api/events/suggested?user=' + userObject.uid;
+			//let suggestEventURL = '/api/events/suggested?user=' + userObject.uid;
 			fetch(suggestEventURL).then(result => result.json())
 			.then(suggested =>(JSON.stringify(this.state.suggested) === JSON.stringify(suggested))
 				? null
@@ -244,7 +240,7 @@ class SearchRouting extends React.Component {
   		display: 'flex',
 
   		flexFlow: 'row wrap',
-  		justifyContent: 'space-evenly'
+  		justifyContent: 'flex-start'
 
 		}
 		const searchBarStyle = {
