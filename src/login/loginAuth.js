@@ -1,7 +1,7 @@
 import React from "react";
 import {FontIcon, RaisedButton, TextField} from "material-ui";
 import {loginWithGoogle, loginWithEmail} from "../helpers/firebase";
-import {firebaseAuth} from "../constraints/constants";
+import {firebaseAuth,targetAddress} from "../constraints/constants";
 
 import LoginDialog from "./loginDialog";
 
@@ -96,6 +96,26 @@ class Login extends React.Component {
 								// authenticate with firebase every time a user logs in
 								localStorage.setItem(appTokenKey, user.uid);
 
+								user.getIdToken().then(function(token) {
+									console.log(token);
+									// Send request to add favourite for user
+									// Add Favourite
+									let targetUrl = targetAddress+'/api/users/add';
+									fetch(targetUrl, {
+										method: 'POST',
+										headers: {
+											'Content-Type': 'application/json',
+										},
+										body: JSON.stringify({
+											'email': user.email,
+											'token': token
+										})
+									})
+									.then(response => response.json())
+									.then(body => console.log(body));
+								}).catch(function(error) {
+									console.log(error);
+								});
 								// store the token
 								// this.props.history.push("/app/home")
 						}
