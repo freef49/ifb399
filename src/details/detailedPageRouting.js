@@ -49,10 +49,7 @@ class DetailedPageRouting extends React.Component {
     let venue = this.state.items.venue
       ? Object.create(this.state.items.venue)
       : '';
-    let venueLocation = venue.location
-      ? Object.create(venue.location)
-      : '';
-    let venueLocationURL = "http://maps.google.com/?q=" + (venueLocation.latitude) + "," + (venueLocation.longitude);
+    let venueLocationURL = "http://maps.google.com/?q=" + (venue.latitude) + "," + (venue.longitude);
 
     return (
 
@@ -78,8 +75,16 @@ class DetailedPageRouting extends React.Component {
 
           </div>
         </div>
-        <RaisedButton label="Get Tickets!" primary={true} fullWidth={true} href={this.state.items.link} style={fullWidthButtons}/>
-        <RaisedButton label="Get Directions" secondary={true} fullWidth={true} href={venueLocationURL} style={fullWidthButtons}/>
+				{
+					(this.state.items.entry != null && this.state.items.entry.details != null)
+						? <RaisedButton label="Get Tickets!" primary={true} fullWidth={true} href={this.state.items.entry.details} style={fullWidthButtons}/>
+						: null
+				}
+				{
+					(venue.latitude != null && venue.longitude != null)
+						? <RaisedButton label="Get Directions" secondary={true} fullWidth={true} href={venueLocationURL} style={fullWidthButtons}/>
+						: null
+				}
 
         <div style={sideBySide}>
           <div style={{

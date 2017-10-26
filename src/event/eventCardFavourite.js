@@ -1,5 +1,6 @@
 import React from 'react';
 import IconButton from 'material-ui/IconButton';
+import Checkbox from 'material-ui/Checkbox';
 import FavouriteIcon from 'material-ui/svg-icons/action/favorite';
 import FavouriteBorderIcon from 'material-ui/svg-icons/action/favorite-border';
 import muiThemeable from 'material-ui/styles/muiThemeable';
@@ -21,13 +22,9 @@ class Favourite extends React.Component {
 	}
 
 	// Handle Favourite Click
-	handleClick(event) {
+	handleChange(event, isInputChecked) {
 		// Check favourited status
-		if (this.state.favourited == 1) {
-			// Remove Favourite
-			console.log("Remove Favourite");
-			this.setState({favourited: 0});
-		} else {
+		if (isInputChecked) {
 			let eventID = this.props.eventID;
 			//console.log(eventID);
 			// Get User ID token
@@ -52,19 +49,22 @@ class Favourite extends React.Component {
 			}).catch(function(error) {
 				console.log(error);
 			});
-			this.setState({favourited: 1});
+			this.setState({favourited: true});
+		} else {
+			// Remove Favourite
+			console.log("Remove Favourite");
+			this.setState({favourited: false});
 		}
 	}
 
 	render() {
 		return (
-			<IconButton onClick={this.handleClick.bind(this)} tooltip="Favourite" touch={true} tooltipPosition="bottom-right">
-	      { // Get Icon based on Favourite Status
-					(this.props.favourited == 1)
-						? <FavouriteIcon />
-						: <FavouriteBorderIcon />
-				}
-	    </IconButton>
+			<Checkbox
+				checked={this.state.favourited}
+				onCheck={this.handleChange.bind(this)}
+	      checkedIcon={<FavouriteIcon />}
+	      uncheckedIcon={<FavouriteBorderIcon />}
+      />
 		);
 	}
 }

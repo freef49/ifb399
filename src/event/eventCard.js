@@ -11,6 +11,7 @@ import Favourite from './eventCardFavourite.js';
 import DefaultImage from '../assets/images/default.png';
 
 class EventCard extends React.Component {
+
   render() {
     const style = {
       height: 300,
@@ -31,7 +32,7 @@ class EventCard extends React.Component {
 				{
 					// Add Favourite Button for Logged In Users
 					(this.props.user != null)
-						? <Favourite eventID={this.props.eventID} favourited={this.props.favourited} />
+						? <Favourite eventID={this.props.eventID} favourited={(this.props.favourited===1) ? true : false} />
 						: null
 				}
       </Paper>

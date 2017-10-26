@@ -1,12 +1,11 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import {logout} from "../helpers/firebase";
-import {firebaseAuth} from "../constraints/constants";
+import {firebaseAuth, targetAddress} from "../constraints/constants";
 
 import LoginDialog from '../login/loginDialog';
 import Logo from '../assets/images/sob_logo.svg';
@@ -47,6 +46,27 @@ class Menu extends React.Component{
 
 							// store the token
 							// this.props.history.push("/app/home")
+							firebaseAuth().currentUser.getIdToken().then(function(token) {
+								console.log(token);
+								console.log(user.email);
+								// Send request to add favourite for user
+								// Add Favourite
+								let targetUrl = targetAddress+'/api/users/add';
+								fetch(targetUrl, {
+									method: 'POST',
+									headers: {
+										'Content-Type': 'application/json',
+									},
+									body: JSON.stringify({
+										'email': user.email,
+										'token': token
+									})
+								})
+								.then(response => response.json())
+								.then(body => console.log(body));
+							}).catch(function(error) {
+								console.log(error);
+							});
 					}
 			});
 		}
@@ -99,28 +119,28 @@ class Menu extends React.Component{
 
 			return (
 				<div>
-							<AppBar title="SOUNDS OF BRISBANE" style={style} titleStyle={titleStyle} iconClassNameRight="muidocs-icon-navigation-expand-more" onTouchTap={this.handleToggle}/>
-							<Drawer
-								docked={false}
-								open={this.state.open}
-								onRequestChange={(open) => this.setState({open})}
-							>
-								<MenuItem onClick={this.handleToggle} containerElement={<Link to="/" />}
-								primaryText="Home"></MenuItem>
-								{this.state.loggedIn == false ? (
-									<MenuItem onClick={this.showLoginOverlay} primaryText="Login"></MenuItem>
-								):(
-									<div>
-										<MenuItem onClick={this.handleLogout}
-										primaryText="Logout"></MenuItem>
-										<MenuItem onClick={this.handleToggle} containerElement={<Link to={"/favourites/"+localStorage.getItem(appTokenKey)} />}
-										primaryText="Favourites"></MenuItem>
-									</div>
-								)}
-							</Drawer>
+					<AppBar title="SOUNDS OF BRISBANE" style={style} titleStyle={titleStyle} iconClassNameRight="muidocs-icon-navigation-expand-more" onTouchTap={this.handleToggle}/>
+					<Drawer
+						docked={false}
+						open={this.state.open}
+						onRequestChange={(open) => this.setState({open})}
+					>
+						<MenuItem onClick={this.handleToggle} containerElement={<Link to="/" />}
+						primaryText="Home"></MenuItem>
+						{this.state.loggedIn === false ? (
+							<MenuItem onClick={this.showLoginOverlay} primaryText="Login"></MenuItem>
+						):(
 							<div>
-								<LoginDialog hideLogin={this.hideLoginOverlay} open={this.state.showLogin}/>
+								<MenuItem onClick={this.handleLogout}
+								primaryText="Logout"></MenuItem>
+								<MenuItem onClick={this.handleToggle} containerElement={<Link to={"/favourites/"+localStorage.getItem(appTokenKey)} />}
+								primaryText="Favourites"></MenuItem>
 							</div>
+						)}
+					</Drawer>
+					<div>
+						<LoginDialog hideLogin={this.hideLoginOverlay} open={this.state.showLogin}/>
+					</div>
 				</div>
 
 			);

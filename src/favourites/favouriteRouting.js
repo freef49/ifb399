@@ -1,14 +1,11 @@
 import React from 'react';
 import EventCard from '../event/eventCard.js'
 import SuggestedEventCard from '../event/suggestedEventCard.js'
-import RaisedButton from 'material-ui/RaisedButton';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 // Target Address
 import {targetAddress} from "../constraints/constants";
 
 const appTokenKey = "appToken";
-// Get User Token
-let user = localStorage.getItem(appTokenKey);
 
 class FavouriteRouting extends React.Component {
   constructor(props) {

@@ -5,11 +5,8 @@ import AppRouting from './AppRouting.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
-	blue900,
 	cyan500, cyan700,
-	pinkA200,
-	indigo900,
-	grey100, grey300, grey400, grey500, grey800,
+	grey100, grey300, grey400, grey800,
 	white, darkBlack, fullBlack,
 } from 'material-ui/styles/colors';
 

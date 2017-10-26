@@ -84,42 +84,6 @@ class Login extends React.Component {
 				//     this.props.history.push("/app/home");
 				//     return;
 				// }
-
-				firebaseAuth().onAuthStateChanged(user => {
-						if (user) {
-								console.log("User signed in: ", JSON.stringify(user));
-
-								localStorage.removeItem(firebaseAuthKey);
-
-								// here authenticates with you web server to get the
-								// application specific token so that you do not have to
-								// authenticate with firebase every time a user logs in
-								localStorage.setItem(appTokenKey, user.uid);
-
-								user.getIdToken().then(function(token) {
-									console.log(token);
-									// Send request to add favourite for user
-									// Add Favourite
-									let targetUrl = targetAddress+'/api/users/add';
-									fetch(targetUrl, {
-										method: 'POST',
-										headers: {
-											'Content-Type': 'application/json',
-										},
-										body: JSON.stringify({
-											'email': user.email,
-											'token': token
-										})
-									})
-									.then(response => response.json())
-									.then(body => console.log(body));
-								}).catch(function(error) {
-									console.log(error);
-								});
-								// store the token
-								// this.props.history.push("/app/home")
-						}
-				});
 		}
 
 		render() {
