@@ -12,6 +12,7 @@ class FavouriteRouting extends React.Component {
     super(props);
     this.event1 = {};
     this.state = {
+			user: 'loggedIn',
       items: [],
 			suggested: []
     };

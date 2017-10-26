@@ -57,4 +57,5 @@ ol, ul {
 .game-info {
   margin-left: 20px;
 }
+#login-email,#login-password { color: black !important; }
 input[style] { color: white !important; }

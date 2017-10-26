@@ -92,12 +92,6 @@ class LoginDialog extends React.Component {
 			alignItems:'center',
 			justifyContent:'center'
 		}
-		const textStyle = {
-			width: 20,
-			marginLeft: 30,
-			lineHeight: 4,
-			fontFamily: 'Roboto, sans-serif'
-		}
 		const iconStyles = {
 				color: "#ffffff"
 		};
@@ -119,9 +113,11 @@ class LoginDialog extends React.Component {
 			<div style={position}>
 				<div>
 					<TextField
+						id="login-email"
 						ref="email"
 						floatingLabelStyle={{color: this.props.muiTheme.palette.accent3}}
-						textareaStyle={{color: this.props.muiTheme.palette.alternateTextColor}}
+						textareaStyle={{color: this.props.muiTheme.palette.textColor}}
+						inputStyle={{color: this.props.muiTheme.palette.textColor}}
 						hintText="Email"
 						floatingLabelText="Email"
 						type="text"
@@ -129,9 +125,11 @@ class LoginDialog extends React.Component {
 					/>
 					<br />
 					<TextField
+						id="login-password"
 						ref="password"
 						floatingLabelStyle={{color: this.props.muiTheme.palette.accent3}}
-						textareaStyle={{color: this.props.muiTheme.palette.alternateTextColor}}
+						textareaStyle={{color: this.props.muiTheme.palette.textColor}}
+						inputStyle={{color: this.props.muiTheme.palette.textColor}}
 						hintText="Password"
 						floatingLabelText="Password"
 						type="password"
