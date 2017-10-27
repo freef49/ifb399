@@ -8,14 +8,18 @@ class DateTime extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			enabled: false,
 			timestamp: this.props.currentDateTime,
 		};
 	}
 
 	// Update Date Value
 	handleChangeDate(event, newDate) {
+		newDate.setHours(0);
+		newDate.setMinutes(0);
 		// Send Date to Timestamp
 		this.setState({
+			enabled: true,
 			timestamp: newDate,
 		});
 		// Send Timestamp to Parent
@@ -27,14 +31,27 @@ class DateTime extends React.Component {
 		// Get Current Timestamp
 		let timestamp = this.state.timestamp;
 		// Adjust Timestamp Time
-		timestamp.setHours(newTime.getHours());
-		timestamp.setMinutes(newTime.getMinutes());
+		timestamp.setHours(0);
+		timestamp.setMinutes(0);
 		// Set State Timestamp to Adjusted Timestamp
 		this.setState({
 			timestamp: timestamp
 		});
 		// Send Timestamp to Parent
 		this.props.updateDateTime(timestamp);
+	}
+
+	// Open Date Picker from Button
+	openDatePicker() {
+		this.refs.datepicker.openDialog();
+	}
+
+	clearDatePicker() {
+		this.setState({
+			enabled: false,
+			timestamp: this.props.currentDateTime
+		});
+		this.props.updateDateTime(null);
 	}
 
 // resetDate(){
@@ -46,7 +63,8 @@ class DateTime extends React.Component {
 			color: this.props.muiTheme.palette.alternateTextColor
 		}
 		const dateStyle = {
-			width: 'auto'
+			width: 'auto',
+			maxWidth: '100px'
 		}
 		const timeStyle = {
 			width: 'auto'
@@ -54,18 +72,35 @@ class DateTime extends React.Component {
 		const dateTimeStyle ={
 			display: 'flex'
 		}
-
 		return (
 			<div style={dateTimeStyle}>
+
 				<DatePicker
-					style={dateStyle}
+					ref="datepicker"
 					hintText="Date"
 					hintStyle={hintStyle}
 					value = {this.state.timestamp}
-					textFieldStyle={dateStyle}
+					textFieldStyle={(this.state.enabled) ? dateStyle : {display: 'none'}}
 					style={dateStyle}
 					onChange={this.handleChangeDate.bind(this)}
 				/>
+				{
+					(this.state.enabled)
+						?	<RaisedButton
+								primary={true}
+								buttonStyle={{backgroundColor: '#dd4b39'}}
+								style={{backgroundColor: 'none', padding:'10px', boxShadow: 'none'}}
+								onTouchTap={this.clearDatePicker.bind(this)}
+								label="Clear Date"
+							/>
+						: <RaisedButton
+								primary={true}
+								buttonStyle={{backgroundColor: this.props.muiTheme.palette.accent1Color}}
+								style={{backgroundColor: 'none', padding:'10px', boxShadow: 'none'}}
+								onTouchTap={this.openDatePicker.bind(this)}
+								label="Search Date"
+							/>
+				}
 				{/* <RaisedButton
           label="Reset"
           primary={true}

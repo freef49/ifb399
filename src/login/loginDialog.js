@@ -104,20 +104,24 @@ class LoginDialog extends React.Component {
     ];
 		return (
 			<Dialog
+				autoDetectWindowHeight
 				title="Login"
+				bodyStyle={{height:'100%'}}
+				titleStyle={{height:'30px', padding:'24px', paddingTop:'10px', paddingBottom:'0px'}}
 				actions={actions}
 				open={this.state.open}
 				modal={false}
 				onRequestClose={this.handleCancel}
 			>
 			<div style={position}>
-				<div>
+				<div style={{}}>
 					<TextField
 						id="login-email"
 						ref="email"
 						floatingLabelStyle={{color: this.props.muiTheme.palette.accent3}}
 						textareaStyle={{color: this.props.muiTheme.palette.textColor}}
 						inputStyle={{color: this.props.muiTheme.palette.textColor}}
+						style={{textAlign:'center', margin:'0px', width:'100%'}}
 						hintText="Email"
 						floatingLabelText="Email"
 						type="text"
@@ -130,6 +134,7 @@ class LoginDialog extends React.Component {
 						floatingLabelStyle={{color: this.props.muiTheme.palette.accent3}}
 						textareaStyle={{color: this.props.muiTheme.palette.textColor}}
 						inputStyle={{color: this.props.muiTheme.palette.textColor}}
+						style={{margin: '0px', width: '100%'}}
 						hintText="Password"
 						floatingLabelText="Password"
 						type="password"
@@ -138,30 +143,31 @@ class LoginDialog extends React.Component {
 					<br/>
 					<FlatButton
 						label="Forgot Password"
-						onClick={this.handlePasswordReset}
+						onTouchTap={this.handlePasswordReset}
 					/>
 					<RaisedButton
 							label="Sign in"
 							labelColor={this.props.muiTheme.palette.alternateTextColor}
 							backgroundColor={this.props.muiTheme.palette.primary1Color}
-							onClick={this.handleEmailLogin}
+							onTouchTap={this.handleEmailLogin}
 					/>
 				</div>
-				<h2>OR</h2>
+				<h3 style={{margin:'5px'}}>OR</h3>
 				<div>
-					<hr/>
+
+					<hr style={{margin:'2px', padding: '0px'}}/>
 					<RaisedButton
 							label="Sign in with Google"
 							labelColor={"#ffffff"}
 							backgroundColor="#dd4b39"
 							icon={<FontIcon className="fa fa-google-plus" style={iconStyles}/>}
-							onClick={this.handleGoogleLogin}
+							onTouchTap={this.handleGoogleLogin}
 					/>
 					<RaisedButton
 							label="New User? Sign Up"
 							labelColor={this.props.muiTheme.palette.alternateTextColor}
 							backgroundColor={this.props.muiTheme.palette.primary1Color}
-							onClick={this.handleEmailSignup}
+							onTouchTap={this.handleEmailSignup}
 					/>
 				</div>
 			</div>

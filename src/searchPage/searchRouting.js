@@ -203,18 +203,28 @@ class SearchRouting extends React.Component {
 
 	// Update Date Value
 	handleChangeDateTime(newTimestamp) {
-		// Set Date String
-		let date = newTimestamp.getFullYear() + '-' + (newTimestamp.getMonth()+1) + '-' + newTimestamp.getDate();
-		// Set Time String
-		let time = newTimestamp.getHours() + ':' + ('0' + newTimestamp.getMinutes()).slice(-2);
-		// Update State Values for Date and Time
-		this.setState({
-			date: {
-				enabled: true,
-				date: date,
-				time: time
-			}
-		});
+		if(newTimestamp == null) {
+			this.setState({
+				date: {
+					enabled: false,
+					date: null,
+					time: null
+				}
+			});
+		} else {
+			// Set Date String
+			let date = newTimestamp.getFullYear() + '-' + (newTimestamp.getMonth()+1) + '-' + newTimestamp.getDate();
+			// Set Time String
+			let time = newTimestamp.getHours() + ':' + ('0' + newTimestamp.getMinutes()).slice(-2);
+			// Update State Values for Date and Time
+			this.setState({
+				date: {
+					enabled: true,
+					date: date,
+					time: time
+				}
+			});
+		}
 	}
 
 /*	handleChange(event) {
