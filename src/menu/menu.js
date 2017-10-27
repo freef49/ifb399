@@ -136,7 +136,7 @@ class Menu extends React.Component{
 					>
 						{this.state.loggedIn === true ? (
 							<MenuItem
-								disabled="true"
+								disabled
 								style={{marginTop: 10, minHeight: 100, textAlign: 'center'}}
 								primaryText={(this.state.displayname != null) ? this.state.displayname : this.state.email}
 							>

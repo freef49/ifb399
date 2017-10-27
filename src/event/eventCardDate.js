@@ -13,7 +13,7 @@ export class Date extends React.Component {
     }
 
     //const day = this.props.date.day ? this.props.date.day : 'Loading...';
-    return <p style={style}><strong>{date.date} {date.month}</strong> - {date.time}</p>;
+    return <p style={style}><strong>{date.day} | {date.date} {date.month}</strong>  {(date.time != '0:00') ? ' - '+date.time : null}</p>;
   }
 }
 
